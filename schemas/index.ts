@@ -20,7 +20,15 @@ export const RegisterSchema = z.object({
   password: z.string().min(8, {
     message: "Minimum 8 characters required"
   }),
-  username: z.string().min(6, {
-    message: "Username is required, (min 6 characters)"
-  }),
+  username: z.string()
+    .min(6, {
+      message: "Username is required, (min 6 characters)"
+    })
+    .max(24, {
+      message: "Username is required, (max24 characters)"
+    })
+    .toLowerCase()
+    .regex(/^[a-z0-9_-]+$/, {
+      message: "Username must be lowercase and can only contain letters, numbers, underscores, and dashes"
+    }),
 });

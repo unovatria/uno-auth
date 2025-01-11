@@ -8,6 +8,9 @@
 // npx prisma generate
 // npx prisma db push
 
+// Tüm veritabanını sıfırlamak için:
+// npx prisma migrate reset
+
 generator client {
   provider = "prisma-client-js"
 }
