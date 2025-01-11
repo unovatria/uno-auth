@@ -13,6 +13,12 @@ export const AuthApiPrefix = "/api/auth";
 export const DEFAULT_LOGIN_REDIRECT = "/settings";
 
 /**
+ * Kullanırıcıların giriş yaparken kullanacağı adres
+ * @type {string}
+ */
+export const DEFAULT_LOGIN_ADRESS = "/auth/login";
+
+/**
  * Public olarak ulaşılabilecek konumların liste kümesi
  * Bu konumlar auth istenmeden ulaşılabilir
  * @type {string[]}
