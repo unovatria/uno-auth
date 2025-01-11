@@ -3,6 +3,11 @@
 import * as z from "zod";
 import { RegisterSchema } from "@/schemas";
 
+import bcrypt from "bcrypt";
+// * not: eğer "bcrypt" ile bir sorun yaşanır ise "bcryptjs" de kullanılabilir.
+import { db } from "@/lib/db";
+import { getUserByEmail, getUserByUsername } from "@/data/user";
+
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   console.log(values);
 
@@ -13,7 +18,32 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     // eğer bir api route olsaydı şuna benzer birşey olurdu "return Response....."
   }
 
-  return { success: "Register success!" }
+  const { email, password, username } = ValidatedFields.data;
+
+  // * Username KONTROL:
+  const existingUsername = await getUserByUsername(username);
+  if (existingUsername) return { error: "Username already taken!" }
+
+  // * Email KONTROL:
+  const existingEmail = await getUserByEmail(email);
+  if (existingEmail) return { error: "Email already in use!" }
+
+  // * Password CRYPT:
+  // Forma girilen şifreyi bir salt ile crpyt'le. (salt = 10)
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  // Hiç bir sorun olmadığı taktirde kullanıyıcı kaydet.
+  await db.user.create({
+    data: {
+      username,
+      email,
+      password: hashedPassword
+    }
+  });
+
+  // Todo (send verification token email)
+
+  return { success: "Register success, Welcome " + username }
 
   // Todo (not) bakılacak
   // nextjs cache fonksiyonları:
