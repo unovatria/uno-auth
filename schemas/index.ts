@@ -18,6 +18,9 @@ export const RegisterSchema = z.object({
   }),
   //password: z.string().min(8),
   password: z.string().min(8, {
-    message: "Password has to be at least 8 characters"
+    message: "Minimum 8 characters required"
+  }),
+  username: z.string().min(6, {
+    message: "Username is required, (min 6 characters)"
   }),
 });

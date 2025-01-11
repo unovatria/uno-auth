@@ -5,31 +5,32 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoginSchema } from "@/schemas";
+import { RegisterSchema } from "@/schemas";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
-import { login } from "@/actions/login";
+import { register } from "@/actions/register";
 import { useState, useTransition } from "react";
 
-export const LoginForm = () => {
+export const RegisterForm = () => {
 
   const [isPending, startTransition] = useTransition();
 
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
 
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+  const form = useForm<z.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
       email: "",
       password: "",
+      username: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+  const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
 
     setError("");
     setSuccess("");
@@ -37,7 +38,7 @@ export const LoginForm = () => {
     // bu kısımda server component çağırıyoruz.
     // benzeri: axios.post("/api/route", values)
     startTransition(() => {
-      login(values)
+      register(values)
         //bu kısım ile server side component içerisindeki error / success kısmını fronta getirip forma yansıtacağız:
         .then((data) => {
           setError(data.error);
@@ -48,9 +49,9 @@ export const LoginForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Welcome"
-      backButtonLabel="Don't have an account ?"
-      backButtonHref="/auth/register"
+      headerLabel="Create an account"
+      backButtonLabel="Already an account ?"
+      backButtonHref="/auth/login"
       showSocial={!isPending}
     >
       {/** Form (wrapping entire constant "form") **/}
@@ -60,6 +61,24 @@ export const LoginForm = () => {
           className="space-y-6"
         >
           <div className="space-y-4">
+          <FormField 
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      placeholder="username"
+                      type="text"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField 
               control={form.control}
               name="email"
@@ -106,7 +125,7 @@ export const LoginForm = () => {
             className="w-full"
             disabled={isPending}
           >
-            Login
+            Register
           </Button>
 
         </form>
