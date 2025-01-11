@@ -3,7 +3,7 @@
 import * as z from "zod";
 import { RegisterSchema } from "@/schemas";
 
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 // * not: eğer "bcrypt" ile bir sorun yaşanır ise "bcryptjs" de kullanılabilir.
 import { db } from "@/lib/db";
 import { getUserByEmail, getUserByUsername } from "@/data/user";
@@ -44,6 +44,9 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   // Todo (send verification token email)
 
   return { success: "Register success, Welcome " + username }
+
+  // Todo redirect after register (to login or somewhere)
+  // veya direk kullanıcıyı login etme.
 
   // Todo (not) bakılacak
   // nextjs cache fonksiyonları:
