@@ -87,6 +87,9 @@ export const {
 
     // custom callback:
     async signIn({ user, account }) {
+
+      console.log({ user, account });
+
       // Todo bu kısımda "user.id" sonuna gelen ünlem zorunluluğu gözden geçirilecek.
 
       // * Eposta doğrulamasını diğer providerların hiçbirine eklemiyoruz şimdilik.

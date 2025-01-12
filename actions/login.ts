@@ -11,6 +11,16 @@ import { getUserByEmail } from "@/data/user";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail";
 
+// ! NOT: (TODO)
+// *0 Kullanıcı kayıt olduğu anda doğrulama epostası gidiyor.
+// *1 Kayıt formu sıfırlanmıyor, kullanıcı yönlendirilmiyor, sadece doğrulama epostaı gittiğine dair bir yazı çıkıyor.
+// *2 Aynı bilgiler ile kayıt gönderemiyor, kullanıcı adı zaten kayıtlı bilgirisi alıyor.
+//gn*3 Diyelimki login ekranına döndü ve giriş yapmak istedi.
+// ! 3-1 YANLIŞ bir parola girsede giriş yap dediği anda, doğrulama epostası gönderildi bildirim alıyor, ve posta gönderiliyor.
+// * 3-2 Epostaya gelen link ile hesap doğrulama başarılı olarak tamamlanıyor. Link 2 kez kullanılamıyor.
+// * 3-3 Hesaba yanlış şifre ile girince konsol throw devam ediyor. Ön taraf "Invalid credentials" hatası veriyor.
+// * 4 Doğru eposta ve şifre ile başarılı bir giriş gerçekleştiriliyor.
+
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   console.log(values);
 

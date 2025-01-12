@@ -42,7 +42,8 @@ export const DEFAULT_LOGOUT_ADRESS = "/auth/logout";
  * @type {string[]}
  */
 export const PublicRoutes = [
-  "/"       // landing page (direkt olarak domain)
+  "/",       // landing page (direkt olarak domain)
+  "/auth/new-verification"
 ];
 
 /**
@@ -57,7 +58,7 @@ export const AuthRoutes = [
 ];
 
 /**
- * Doğrulama token'i için kullanılacak konum
+ * Doğrulama token'i için kullanılacak konum (url)
  * @type {string}
  */
 export const VerificationToken_RefreshURL = "http://localhost:3000/auth/new-verification?token=";
