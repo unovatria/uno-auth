@@ -8,8 +8,17 @@ import { DEFAULT_AFTERLOGIN_REDIRECT } from "@/routes";
 
 import { AuthError } from "next-auth";
 import { getUserByEmail } from "@/data/user";
-import { generateVerificationToken } from "@/lib/tokens";
-import { sendVerificationEmail } from "@/lib/mail";
+import { 
+  sendVerificationEmail, 
+  sendTwoFactorTokenEmail 
+} from "@/lib/mail";
+import { 
+  generateVerificationToken, 
+  generateTwoFactorToken 
+} from "@/lib/tokens";
+import { getTwoFactorTokenByEmail } from "@/data/two-factor-token";
+import { db } from "@/lib/db";
+import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
 
 // ! NOT: (TODO)
 // *0 Kullanıcı kayıt olduğu anda doğrulama epostası gidiyor.
@@ -33,7 +42,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 
   //return { success: "Login success!" }
 
-  const { email, password } = ValidatedFields.data;
+  const { email, password, twofactorcode } = ValidatedFields.data;
 
   const existingUser = await getUserByEmail(email);
 
@@ -53,7 +62,59 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     return { success: "Confirmation email sent!" };
   }
   
+  if (existingUser.twoFactorEnabled && existingUser.email) {
 
+    if (twofactorcode) {
+
+      const twoFactorToken = await getTwoFactorTokenByEmail(existingUser.email);
+
+      if (!twoFactorToken) {
+        return { error: "Invalid code!" };
+      }
+
+      if (twoFactorToken.token !== twofactorcode) {
+        return { error: "Invalid code!" };
+      }
+
+      const hasExpired = new Date(twoFactorToken.expires) < new Date();
+
+      if (hasExpired) {
+        return { error: "Code has expired!" };
+      }
+
+      await db.twoFactorToken.delete({
+        where: { id: twoFactorToken.id }
+      });
+
+      const existingConfirmation = await getTwoFactorConfirmationByUserId(existingUser.id);
+
+      if (existingConfirmation) {
+        await db.twoFactorConfirmation.delete({
+          where: { id: existingConfirmation.id }
+        });
+      }
+
+      await db.twoFactorConfirmation.create({
+        data: {
+          userId: existingUser.id
+        }
+      });
+      // herhangi birşey dönmüyoruz (return) else kısmını atlayıp direk sign-in prosedürüne başlayacak.
+
+    } else {
+
+      const twoFactorToken = await generateTwoFactorToken(existingUser.email);
+
+      await sendTwoFactorTokenEmail(
+        twoFactorToken.email,
+        twoFactorToken.token
+      );
+
+      return { twoFactor: true };
+    }
+  }
+
+  //gn* Yukarıda bahsettiğim hata bu kısımda sign-in içerisinde oluyor:
   try {
     await signIn("credentials", {
       email,

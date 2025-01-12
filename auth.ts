@@ -8,6 +8,7 @@ import { db } from "./lib/db";
 
 import { getUserById } from "./data/user";
 import { DEFAULT_ERROR_ADRESS, DEFAULT_LOGIN_ADRESS } from "./routes";
+import { getTwoFactorConfirmationByUserId } from "./data/two-factor-confirmation";
 
 export const { 
   handlers, 
@@ -100,7 +101,21 @@ export const {
       // Prevent sign-in without email verification.
       if (!existingUser || !existingUser.emailVerified) return false;
 
-      // TODO 2FA check.
+      if (existingUser.twoFactorEnabled) {
+        const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(existingUser.id);
+
+        if (!twoFactorConfirmation) return false;
+
+        // Todo Delete two factor confirmation for next sign-in.
+        // * Kullanıcının her girişinde 2FA onayını silerek bir sonraki girişinde tekrar isteyecek şekilde çalışıyor.
+        // * Bunu değiştirerek (TwoFactorConfirmation Schema) içerisinde expires ekleyerek belli bir sürede silinmesini
+        // *    sağlayabiliriz. (Örneğin 1 gün sonra silinmesi gibi)
+
+        await db.twoFactorConfirmation.delete({
+          where: { id: twoFactorConfirmation.id }
+        });
+
+      }
 
       return true;
     }
