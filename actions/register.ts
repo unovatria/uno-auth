@@ -7,6 +7,8 @@ import bcrypt from "bcryptjs";
 // * not: eğer "bcrypt" ile bir sorun yaşanır ise "bcryptjs" de kullanılabilir.
 import { db } from "@/lib/db";
 import { getUserByEmail, getUserByUsername } from "@/data/user";
+import { generateVerificationToken } from "@/lib/tokens";
+import { sendVerificationEmail } from "@/lib/mail";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   console.log(values);
@@ -41,9 +43,11 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     }
   });
 
-  // Todo (send verification token email)
 
-  return { success: "Register success, Welcome " + username }
+  const verificationToken = await generateVerificationToken(email);
+  await sendVerificationEmail(verificationToken.email, verificationToken.token);
+
+  return { success: "Welcome " + username + "! Please verify your email." }
 
   // Todo redirect after register (to login or somewhere)
   // veya direk kullanıcıyı login etme.

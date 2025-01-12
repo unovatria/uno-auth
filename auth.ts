@@ -85,18 +85,23 @@ export const {
       return session;
     },
 
-
-    /*
     // custom callback:
-    async signIn({ user }) {
+    async signIn({ user, account }) {
       // Todo bu kısımda "user.id" sonuna gelen ünlem zorunluluğu gözden geçirilecek.
+
+      // * Eposta doğrulamasını diğer providerların hiçbirine eklemiyoruz şimdilik.
+      // Allow OAuth without email verification.
+      if (account?.provider !== "credentials") return true;
+
       const existingUser = await getUserById(user.id!);
-      if (!existingUser || !existingUser.emailVerified) {
-        return false;
-      }
+      // Prevent sign-in without email verification.
+      if (!existingUser || !existingUser.emailVerified) return false;
+
+      // TODO 2FA check.
+
       return true;
     }
-    */
+    
 
   },
   adapter: PrismaAdapter(db),

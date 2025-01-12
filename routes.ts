@@ -55,3 +55,9 @@ export const AuthRoutes = [
   DEFAULT_REGISTER_ADRESS,
   DEFAULT_ERROR_ADRESS,
 ];
+
+/**
+ * Doğrulama token'i için kullanılacak konum
+ * @type {string}
+ */
+export const VerificationToken_RefreshURL = "http://localhost:3000/auth/new-verification?token=";
