@@ -49,6 +49,7 @@ export const DEFAULT_PASSWORD_RESET_ADRESS = "/auth/reset";
  */
 export const PublicRoutes = [
   "/",       // landing page (direkt olarak domain)
+  // Doğrulama kısmına giriş yapmış / yapmamış herhangi birisi ulaşabilir.
   "/auth/new-verification"
 ];
 
@@ -62,6 +63,8 @@ export const AuthRoutes = [
   DEFAULT_REGISTER_ADRESS,
   DEFAULT_ERROR_ADRESS,
   DEFAULT_PASSWORD_RESET_ADRESS,
+  // Şifre SIFIRLAMA (unutma) kısmına sadece ÇIKIŞ yapmış kullanıcı erişebilir.
+  "/auth/new-password"
 ];
 
 /**
