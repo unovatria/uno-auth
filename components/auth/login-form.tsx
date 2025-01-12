@@ -13,6 +13,8 @@ import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
 import { login } from "@/actions/login";
 import { useState, useTransition } from "react";
+import { useSearchParams } from "next/navigation";
+import { DEFAULT_REGISTER_ADRESS } from "@/routes";
 
 export const LoginForm = () => {
 
@@ -20,6 +22,9 @@ export const LoginForm = () => {
 
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
+
+  const searchParams = useSearchParams();
+  const urlError = searchParams.get("error") === "OAuthAccountNotLinked" ? "Email already in use with different provider!" : undefined;
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -41,6 +46,7 @@ export const LoginForm = () => {
         //bu kısım ile server side component içerisindeki error / success kısmını fronta getirip forma yansıtacağız:
         .then((data) => {
           setError(data?.error);
+          // TODO Change when 2FA added.
           setSuccess(data?.success);
           // soru işaretleri arkadan gelen "NEXT_REDIRECT" hatasının ön tarafa yansımaması için.
         })
@@ -51,7 +57,7 @@ export const LoginForm = () => {
     <CardWrapper
       headerLabel="Welcome"
       backButtonLabel="Don't have an account ?"
-      backButtonHref="/auth/register"
+      backButtonHref={DEFAULT_REGISTER_ADRESS}
       showSocial={!isPending}
     >
       {/** Form (wrapping entire constant "form") **/}
@@ -99,7 +105,7 @@ export const LoginForm = () => {
             />
           </div>
 
-          <FormError message={error} />
+          <FormError message={error || urlError} />
           <FormSuccess message={success} />
 
           <Button

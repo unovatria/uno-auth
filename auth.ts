@@ -7,6 +7,7 @@ import authConfig from "@/auth.config";
 import { db } from "./lib/db";
 
 import { getUserById } from "./data/user";
+import { DEFAULT_ERROR_ADRESS, DEFAULT_LOGIN_ADRESS } from "./routes";
 
 export const { 
   handlers, 
@@ -14,6 +15,25 @@ export const {
   signIn, 
   signOut 
 } = NextAuth({
+
+  // * rrr
+  pages: {
+    signIn: DEFAULT_LOGIN_ADRESS,
+    error: DEFAULT_ERROR_ADRESS,
+    //signOut: "/auth/logout"
+  },
+
+  // * Bu kısımdaki event, google / github ile giriş yapanlar için çalışacak.
+  // * Oauth ile giriş yapanların "email-verified" otomatik onaylı olmasını sağlayacak.
+  events: {
+    async linkAccount({ user }) {
+      await db.user.update({
+        where: { id: user.id },
+        data: { emailVerified: new Date() }
+      })
+    }
+  },
+
   callbacks: {
 
     // 0 - Önce burada token ile başlıyoruz //* (bu kısımda "user, profile" girdileri undefined dönüyor??)
