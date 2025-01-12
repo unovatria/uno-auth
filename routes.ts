@@ -10,13 +10,31 @@ export const AuthApiPrefix = "/api/auth";
  * Giriş yapan kullanıcının yönlendirileceği adres:
  * @type {string}
  */
-export const DEFAULT_LOGIN_REDIRECT = "/settings";
+export const DEFAULT_AFTERLOGIN_REDIRECT = "/settings";
 
 /**
- * Kullanırıcıların giriş yaparken kullanacağı adres
+ * Kullanıcıların giriş yaparken kullanacağı adres
  * @type {string}
  */
 export const DEFAULT_LOGIN_ADRESS = "/auth/login";
+
+/**
+ * Kullanıcıların kayıt olurken kullanacağı adres
+ * @type {string}
+ */
+export const DEFAULT_REGISTER_ADRESS = "/auth/register";
+
+/**
+ * Kullanıcıların hata ile karşılaştığında göreceği adres
+ * @type {string}
+ */
+export const DEFAULT_ERROR_ADRESS = "/auth/error";
+
+/**
+ * Kullanıcıların çıkış yaptığında gideceği
+ * @type {string}
+ */
+export const DEFAULT_LOGOUT_ADRESS = "/auth/logout";
 
 /**
  * Public olarak ulaşılabilecek konumların liste kümesi
@@ -33,6 +51,7 @@ export const PublicRoutes = [
  * @type {string[]}
  */
 export const AuthRoutes = [
-  "/auth/login",
-  "/auth/register",
+  DEFAULT_LOGIN_ADRESS,
+  DEFAULT_REGISTER_ADRESS,
+  DEFAULT_ERROR_ADRESS,
 ];

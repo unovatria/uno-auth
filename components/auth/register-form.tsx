@@ -13,6 +13,7 @@ import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
 import { register } from "@/actions/register";
 import { useState, useTransition } from "react";
+import { DEFAULT_LOGIN_ADRESS } from "@/routes";
 
 export const RegisterForm = () => {
 
@@ -51,7 +52,7 @@ export const RegisterForm = () => {
     <CardWrapper
       headerLabel="Create an account"
       backButtonLabel="Already an account ?"
-      backButtonHref="/auth/login"
+      backButtonHref={DEFAULT_LOGIN_ADRESS}
       showSocial={!isPending}
     >
       {/** Form (wrapping entire constant "form") **/}

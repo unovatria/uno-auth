@@ -1,5 +1,6 @@
 "use client";
 
+import { DEFAULT_LOGIN_ADRESS } from "@/routes";
 import { useRouter } from "next/navigation";
 
 interface LoginButtonProps {
@@ -17,7 +18,7 @@ export const LoginButton = ({
   const router = useRouter();
 
   const onClick = () => {
-    router.push("/auth/login");
+    router.push(DEFAULT_LOGIN_ADRESS);
   };
 
   if (mode === "modal") {

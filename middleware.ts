@@ -4,9 +4,10 @@ import authConfig from "./auth.config";
 
 import {
   AuthApiPrefix,
-  DEFAULT_LOGIN_REDIRECT,
+  DEFAULT_AFTERLOGIN_REDIRECT,
   PublicRoutes,
   AuthRoutes,
+  DEFAULT_LOGIN_ADRESS,
 } from "@/routes";
 import { NextRequest } from "next/server";
 
@@ -25,14 +26,14 @@ export default auth((req) => {
 
   if (isAuthRoute) {
     if (isLoggedIn) {
-      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+      return Response.redirect(new URL(DEFAULT_AFTERLOGIN_REDIRECT, nextUrl));
     }
     return null;
   }
 
   // Require authentication for protected routes
   if (!isLoggedIn && !isPublicRoute) {
-    return Response.redirect(new URL("/auth/login", nextUrl))
+    return Response.redirect(new URL(DEFAULT_LOGIN_ADRESS, nextUrl))
   }
 
   return null
