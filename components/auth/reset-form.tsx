@@ -5,37 +5,31 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoginSchema } from "@/schemas";
+import { ResetSchema } from "@/schemas";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
-import { login } from "@/actions/login";
+import { reset } from "@/actions/reset";
 import { useState, useTransition } from "react";
-import { useSearchParams } from "next/navigation";
-import { DEFAULT_PASSWORD_RESET_ADRESS, DEFAULT_REGISTER_ADRESS } from "@/routes";
-import Link from "next/link";
+import { DEFAULT_LOGIN_ADRESS } from "@/routes";
 
-export const LoginForm = () => {
+export const ResetForm = () => {
 
   const [isPending, startTransition] = useTransition();
 
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
 
-  const searchParams = useSearchParams();
-  const urlError = searchParams.get("error") === "OAuthAccountNotLinked" ? "Email already in use with different provider!" : undefined;
-
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+  const form = useForm<z.infer<typeof ResetSchema>>({
+    resolver: zodResolver(ResetSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: ""
     },
   });
 
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+  const onSubmit = (values: z.infer<typeof ResetSchema>) => {
 
     setError("");
     setSuccess("");
@@ -43,7 +37,7 @@ export const LoginForm = () => {
     // bu kısımda server component çağırıyoruz.
     // benzeri: axios.post("/api/route", values)
     startTransition(() => {
-      login(values)
+      reset(values)
         //bu kısım ile server side component içerisindeki error / success kısmını fronta getirip forma yansıtacağız:
         .then((data) => {
           setError(data?.error);
@@ -56,10 +50,9 @@ export const LoginForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Welcome"
-      backButtonLabel="Don't have an account ?"
-      backButtonHref={DEFAULT_REGISTER_ADRESS}
-      showSocial={!isPending}
+      headerLabel="Forgot your password?"
+      backButtonLabel="Back to login"
+      backButtonHref={DEFAULT_LOGIN_ADRESS}
     >
       {/** Form (wrapping entire constant "form") **/}
       <Form {...form}>
@@ -86,39 +79,10 @@ export const LoginForm = () => {
                 </FormItem>
               )}
             />
-            <FormField 
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPending}
-                      placeholder="********"
-                      type="password"
-                    />
-                  </FormControl>
 
-                  <Button
-                    size="sm"
-                    variant="link"
-                    asChild
-                    className="px-0 font-normal"
-                  >
-                    <Link href={DEFAULT_PASSWORD_RESET_ADRESS}>
-                      Forgot password ?
-                    </Link>
-                  </Button>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
           </div>
 
-          <FormError message={error || urlError} />
+          <FormError message={error} />
           <FormSuccess message={success} />
 
           <Button
@@ -126,7 +90,7 @@ export const LoginForm = () => {
             className="w-full"
             disabled={isPending}
           >
-            Login
+            Send reset email
           </Button>
 
         </form>

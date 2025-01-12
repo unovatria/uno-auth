@@ -32,3 +32,9 @@ export const RegisterSchema = z.object({
       message: "Username must be lowercase and can only contain letters, numbers, underscores, and dashes"
     }),
 });
+
+export const ResetSchema = z.object({
+  email: z.string().email({
+    message: "Email is required!",
+  }),
+});

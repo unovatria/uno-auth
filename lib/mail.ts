@@ -1,5 +1,5 @@
 import { Resend } from 'resend';
-import { VerificationToken_RefreshURL } from '@/routes';
+import { PasswordResetToken_RefreshURL, VerificationToken_RefreshURL } from '@/routes';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -18,7 +18,27 @@ export const sendVerificationEmail = async (
   });
 
   if (error) {
-    console.log("erorr on otokken" + error);
+    return false;
+  }
+
+  return true;
+};
+
+export const sendPasswordResetEmail = async (
+  email: string,
+  token: string
+) => {
+
+  const resetLink = `${PasswordResetToken_RefreshURL}${token}`;
+
+  const { data, error } = await resend.emails.send({
+    from: "onboarding@resend.dev",
+    to: email,
+    subject: 'Change your account password',
+    html: `<p>Click <a href="${resetLink}">here</a> to reset your password.</p>`,
+  });
+
+  if (error) {
     return false;
   }
 

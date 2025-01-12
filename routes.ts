@@ -37,6 +37,12 @@ export const DEFAULT_ERROR_ADRESS = "/auth/error";
 export const DEFAULT_LOGOUT_ADRESS = "/auth/logout";
 
 /**
+ * Kullanıcıların parola sıfırlama yapacağında kullanacağı adres
+ * @type {string}
+ */
+export const DEFAULT_PASSWORD_RESET_ADRESS = "/auth/reset";
+
+/**
  * Public olarak ulaşılabilecek konumların liste kümesi
  * Bu konumlar auth istenmeden ulaşılabilir
  * @type {string[]}
@@ -55,6 +61,7 @@ export const AuthRoutes = [
   DEFAULT_LOGIN_ADRESS,
   DEFAULT_REGISTER_ADRESS,
   DEFAULT_ERROR_ADRESS,
+  DEFAULT_PASSWORD_RESET_ADRESS,
 ];
 
 /**
@@ -62,3 +69,9 @@ export const AuthRoutes = [
  * @type {string}
  */
 export const VerificationToken_RefreshURL = "http://localhost:3000/auth/new-verification?token=";
+
+/**
+ * Parola sıfırlama token'i için kullanılacak konum (url)
+ * @type {string}
+ */
+export const PasswordResetToken_RefreshURL = "http://localhost:3000/auth/new-password?token=";
