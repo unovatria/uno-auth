@@ -24,15 +24,6 @@ export const Navbar = () => {
           </Link>
         </Button>
 
-        <Button 
-          asChild
-          variant={pathname === "/settings-client" ? "default" : "outline"}
-        >
-          <Link href="/settings-client">
-            Settings-Client
-          </Link>
-        </Button>
-
         <p className="mx-2 bg-zinc-400 text-zinc-400">|</p>
 
         <Button 

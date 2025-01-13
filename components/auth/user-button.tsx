@@ -43,9 +43,11 @@ export const UserButton = () => {
           </DropdownMenuItem>
         </LogoutButton>
 
+        {/**
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Settings</DropdownMenuItem>
+         */}
         
       </DropdownMenuContent>
     </DropdownMenu>

@@ -59,6 +59,9 @@ export const {
       // 4 - kullanıcı var ise token içerisine username ekliyoruz.
       token.username = existingUser.username;
 
+      // 4.5 - Ek Özellik: İki adımlı doğrulama durumunu token içerisine ekleme:
+      token.isTwoFactorEnabled = existingUser.twoFactorEnabled;
+
       // 5 - özelleştirilmiş tokeni dönüyoruz.
       return token;
     },
@@ -81,6 +84,11 @@ export const {
       // 2 - token içerisinde "username" var ise ve session user var ise session user username'ini token içerisindeki ile set ediyoruz.
       if (token.username && session.user) {
         session.user.username = token.username as string;
+      }
+
+      // 3 - Ek Özellik: İki adımlı doğrulama durumunu tokenden alıp session içerisine ekleme: 
+      if (session.user) {
+        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
       }
 
       return session;
