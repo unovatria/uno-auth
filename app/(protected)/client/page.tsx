@@ -10,7 +10,7 @@ const ClientPage = () => {
 
   return (
     <div>
-      <UserInfo user={user} label="Client Component" />
+      <UserInfo user={user} label="📱 Client Component" />
 
       <form action={logout} className="bg-white p-4 rounded-xl mt-4">
         <button type="submit">Logout (Client page form &gt; button calling logout action)</button>

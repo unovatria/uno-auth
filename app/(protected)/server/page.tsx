@@ -8,7 +8,7 @@ const ServerPage = async () => {
 
   return (
     <div>
-      <UserInfo user={user} label="Server Component" />
+      <UserInfo user={user} label="💻 Server Component" />
 
       <form action={logout} className="bg-white p-4 rounded-xl mt-4">
         <button type="submit">Logout (Server page form &gt; button calling logout action)</button>
