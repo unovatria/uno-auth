@@ -42,7 +42,7 @@ export const {
 
       // 0.5 istenmeyen elemanları kaldırma:
       if (token) {
-        // Example: remove email property
+        //gn* Bu kısımda token ve session içerisinde taşınmasını istemedğimiz kısımları kaldırıyoruz.
         const { name, picture, ...restToken } = token;
         token = restToken;
       }
@@ -68,7 +68,7 @@ export const {
 
       // 0.5 istenmeyen elemanları kaldırma:
       if (session.user) {
-        // Remove unwanted properties from session.user
+        //gn* Bu kısımda token ve session içerisinde taşınmasını istemedğimiz kısımları kaldırıyoruz.
         const { name, image, ...rest } = session.user;
         session.user = rest;
       }
