@@ -2,11 +2,14 @@
   "name": "007auth",
   "version": "0.1.0",
   "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "prepare": "npm run build",
     "postinstall": "prisma generate"
   },
   "dependencies": {
