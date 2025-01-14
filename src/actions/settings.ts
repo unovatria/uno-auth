@@ -10,7 +10,7 @@ import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail";
 
 import bcrypt from "bcryptjs";
-import { unstable_update } from "@/lib/auth/auth";
+import { unstable_update } from "@/lib/authlib/auth";
 
 export const settings = async (
   values: z.infer<typeof SettingsSchema>

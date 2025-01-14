@@ -3,7 +3,7 @@
 import * as z from "zod";
 import { LoginSchema } from "@/schemas";
 
-import { signIn } from "@/lib/auth/auth";
+import { signIn } from "@/lib/authlib/auth";
 import { DEFAULT_AFTERLOGIN_REDIRECT } from "@/lib/routes";
 
 import { AuthError } from "next-auth";

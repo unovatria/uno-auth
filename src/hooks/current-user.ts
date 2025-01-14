@@ -1,4 +1,4 @@
-import { auth } from "@/lib/auth/auth";
+import { auth } from "@/lib/authlib/auth";
 
 /**
  * SERVER! component'lerinde session bilgisini almak için kullanılacak olan hook

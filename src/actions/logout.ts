@@ -1,6 +1,6 @@
 "use server";
 
-import { signOut } from "@/lib/auth/auth";
+import { signOut } from "@/lib/authlib/auth";
 import { DEFAULT_LOGIN_ADRESS } from "@/lib/routes";
 
 export const logout = async () => {
