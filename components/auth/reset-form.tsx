@@ -34,16 +34,11 @@ export const ResetForm = () => {
     setError("");
     setSuccess("");
 
-    // bu kısımda server component çağırıyoruz.
-    // benzeri: axios.post("/api/route", values)
     startTransition(() => {
       reset(values)
-        //bu kısım ile server side component içerisindeki error / success kısmını fronta getirip forma yansıtacağız:
         .then((data) => {
           setError(data?.error);
-          // TODO Change when 2FA added.
           setSuccess(data?.success);
-          // soru işaretleri arkadan gelen "NEXT_REDIRECT" hatasının ön tarafa yansımaması için.
         })
     });
   };

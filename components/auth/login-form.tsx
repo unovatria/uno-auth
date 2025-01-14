@@ -46,6 +46,8 @@ export const LoginForm = () => {
 
     // bu kısımda server component çağırıyoruz.
     // benzeri: axios.post("/api/route", values)
+    // * bu "startTransition" kullanımı "reset-form.tsx" ve "new-password-form.tsx" içerisindede kullanılmakta
+    // * isteğe bağlı olarak 2FA o kısımlarada eklenebilir.
     startTransition(() => {
       login(values, callbackUrl)
         //bu kısım ile server side component içerisindeki error / success kısmını fronta getirip forma yansıtacağız:

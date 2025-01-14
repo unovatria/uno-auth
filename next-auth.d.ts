@@ -1,6 +1,6 @@
 import NextAuth, { type DefaultSession } from "next-auth";
 
-// Todo //* look 3:15~~
+//* look 3:15~~ (NOT)
 
 export type ExtendedUser = DefaultSession["user"] & {
   username: string;

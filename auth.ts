@@ -122,9 +122,9 @@ export const {
     // custom callback:
     async signIn({ user, account }) {
 
-      // Todo bu kısımda "user.id" sonuna gelen ünlem zorunluluğu gözden geçirilecek.
+      // Bu kısımda "user.id" sonuna gelen ünlem zorunluluğu gözden geçirilecek. (NOT)
 
-      // * Eposta doğrulamasını diğer providerların hiçbirine eklemiyoruz şimdilik.
+      // * Eposta doğrulamasını diğer providerların hiçbirine eklemiyoruz.
       // Allow OAuth without email verification.
       if (account?.provider !== "credentials") return true;
 
@@ -137,7 +137,7 @@ export const {
 
         if (!twoFactorConfirmation) return false;
 
-        // Todo Delete two factor confirmation for next sign-in.
+        // * Delete two factor confirmation for next sign-in. (NOT)
         // * Kullanıcının her girişinde 2FA onayını silerek bir sonraki girişinde tekrar isteyecek şekilde çalışıyor.
         // * Bunu değiştirerek (TwoFactorConfirmation Schema) içerisinde expires ekleyerek belli bir sürede silinmesini
         // *    sağlayabiliriz. (Örneğin 1 gün sonra silinmesi gibi)
