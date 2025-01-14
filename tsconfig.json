@@ -1,5 +1,13 @@
 {
   "compilerOptions": {
+    // this 4 lines for node module usage
+    "outDir": "./dist",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    // add types for next-auth
+    "types": ["node", "next-auth", "./src/types/next-auth.d.ts"],
+    // others
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -17,6 +25,7 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "@/lib/*": ["./src/lib/*"],

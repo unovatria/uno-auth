@@ -2,6 +2,7 @@
   "name": "007auth",
   "version": "0.1.0",
   "private": true,
+  "_comment1": "Bottom 2 lines for node module usage",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -9,7 +10,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "npm run build",
     "postinstall": "prisma generate"
   },
   "dependencies": {
