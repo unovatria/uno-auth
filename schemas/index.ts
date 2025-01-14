@@ -45,3 +45,40 @@ export const NewPasswordSchema = z.object({
     message: "Password is required ! (Min 8 chars)",
   }),
 });
+
+export const SettingsSchema = z.object({
+    name: z.optional(z.string()),
+    username: z.optional(
+      z.string()
+        .min(6, {
+          message: "Username is required, (min 6 characters)"
+        })
+        .max(24, {
+          message: "Username is required, (max24 characters)"
+        })
+        .toLowerCase()
+        .regex(/^[a-z0-9_-]+$/, {
+          message: "Username must be lowercase and can only contain letters, numbers, underscores, and dashes"
+        })
+    ),
+    email: z.optional(z.string().email()),
+    password: z.optional(z.string().min(8, {
+      message: "Password is required ! (Min 8 chars)",
+    })),
+    newPassword: z.optional(z.string().min(8, {
+      message: "Password is required ! (Min 8 chars)",
+    })),
+    twoFactorEnabled: z.optional(z.boolean()),
+}).refine((data) =>  {
+  if (data.password && !data.newPassword) return false;
+  return true;
+}, {
+  message: "New password is required",
+  path: ["newPassword"],
+}).refine((data) =>  {
+  if (data.newPassword && !data.password) return false;
+  return true;
+}, {
+  message: "Password is required",
+  path: ["password"],
+});

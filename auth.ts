@@ -9,15 +9,17 @@ import { db } from "./lib/db";
 import { getUserById } from "./data/user";
 import { DEFAULT_ERROR_ADRESS, DEFAULT_LOGIN_ADRESS } from "./routes";
 import { getTwoFactorConfirmationByUserId } from "./data/two-factor-confirmation";
+import { getAccountByUserId } from "./data/account";
 
 export const { 
   handlers, 
   auth, 
   signIn, 
-  signOut 
+  signOut,
+  unstable_update
 } = NextAuth({
 
-  // * rrr
+  // * 
   pages: {
     signIn: DEFAULT_LOGIN_ADRESS,
     error: DEFAULT_ERROR_ADRESS,
@@ -55,12 +57,26 @@ export const {
 
       // 3 - kullanıcı yok ise direk tokeni dönüyoruz.
       if (!existingUser) return token;
-      
+
       // 4 - kullanıcı var ise token içerisine username ekliyoruz.
       token.username = existingUser.username;
 
       // 4.5 - Ek Özellik: İki adımlı doğrulama durumunu token içerisine ekleme:
       token.isTwoFactorEnabled = existingUser.twoFactorEnabled;
+
+      // 4.7 - 
+      token.name = existingUser.name;
+      token.email = existingUser.email;
+
+      // 4.8 - Ek özellik: Kullanıcıya ait hesap bilgilerini token içerisine ekleme:
+      const existingAccount = await getAccountByUserId(existingUser.id);
+      token.isOAuth = !!existingAccount;
+      /*
+      if (existingAccount) {
+        token.provider = existingAccount.provider;
+        token.type = existingAccount.type;
+      }
+      */
 
       // 5 - özelleştirilmiş tokeni dönüyoruz.
       return token;
@@ -86,18 +102,25 @@ export const {
         session.user.username = token.username as string;
       }
 
-      // 3 - Ek Özellik: İki adımlı doğrulama durumunu tokenden alıp session içerisine ekleme: 
+      // 2.5 - Ek Özellik: İki adımlı doğrulama durumunu tokenden alıp session içerisine ekleme: 
       if (session.user) {
-        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
+        session.user.twoFactorEnabled = token.isTwoFactorEnabled as boolean;
       }
+
+      // 2.7 - 
+      if (session.user) {
+        session.user.name = token.name as string;
+        session.user.email = token.email as string;
+      }
+
+      // 2.8 -
+      if (session.user) session.user.isOAuth = token.isOAuth as boolean;
 
       return session;
     },
 
     // custom callback:
     async signIn({ user, account }) {
-
-      console.log({ user, account });
 
       // Todo bu kısımda "user.id" sonuna gelen ünlem zorunluluğu gözden geçirilecek.
 
