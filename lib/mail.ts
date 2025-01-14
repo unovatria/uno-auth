@@ -1,5 +1,5 @@
 import { Resend } from 'resend';
-import { PasswordResetToken_RefreshURL, VerificationToken_RefreshURL } from '@/routes';
+import { PasswordResetTokenURL, VerificationTokenURL } from '@/routes';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -8,7 +8,7 @@ export const sendVerificationEmail = async (
   token: string
 ) => {
 
-  const confirmLink = `${VerificationToken_RefreshURL}${token}`;
+  const confirmLink = `${VerificationTokenURL}${token}`;
 
   const { data, error } = await resend.emails.send({
     from: "onboarding@resend.dev",
@@ -29,7 +29,7 @@ export const sendPasswordResetEmail = async (
   token: string
 ) => {
 
-  const resetLink = `${PasswordResetToken_RefreshURL}${token}`;
+  const resetLink = `${PasswordResetTokenURL}${token}`;
 
   const { data, error } = await resend.emails.send({
     from: "onboarding@resend.dev",

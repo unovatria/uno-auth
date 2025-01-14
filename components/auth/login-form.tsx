@@ -29,6 +29,8 @@ export const LoginForm = () => {
 
   const [showTwoFactor, setShowTwoFactor] = useState(false);
 
+  const callbackUrl = searchParams.get("callbackUrl");
+
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -45,7 +47,7 @@ export const LoginForm = () => {
     // bu kısımda server component çağırıyoruz.
     // benzeri: axios.post("/api/route", values)
     startTransition(() => {
-      login(values)
+      login(values, callbackUrl)
         //bu kısım ile server side component içerisindeki error / success kısmını fronta getirip forma yansıtacağız:
         .then((data) => {
           if (data?.error) {

@@ -30,8 +30,11 @@ import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation
 // * 3-3 Hesaba yanlış şifre ile girince konsol throw devam ediyor. Ön taraf "Invalid credentials" hatası veriyor.
 // * 4 Doğru eposta ve şifre ile başarılı bir giriş gerçekleştiriliyor.
 
-export const login = async (values: z.infer<typeof LoginSchema>) => {
-  console.log(values);
+export const login = async (
+  values: z.infer<typeof LoginSchema>,
+  callbackUrl?: string | null
+) => {
+
 
   const ValidatedFields = LoginSchema.safeParse(values);
 
@@ -120,8 +123,8 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
       email,
       password,
       redirect: true,
-      redirectTo: DEFAULT_AFTERLOGIN_REDIRECT,
-      callbackUrl: DEFAULT_AFTERLOGIN_REDIRECT,
+      redirectTo: callbackUrl || DEFAULT_AFTERLOGIN_REDIRECT,
+      callbackUrl: callbackUrl || DEFAULT_AFTERLOGIN_REDIRECT,
     });
     //return { success: "Login success!" }
   } catch (error) {

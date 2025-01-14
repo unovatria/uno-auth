@@ -9,11 +9,10 @@ import {
   AuthRoutes,
   DEFAULT_LOGIN_ADRESS,
 } from "@/routes";
-import { NextRequest } from "next/server";
 
 const { auth } = NextAuth(authConfig);
  
-export default auth((req) => {
+export default auth((req) =>  {
 
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
@@ -22,21 +21,31 @@ export default auth((req) => {
   const isPublicRoute = PublicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = AuthRoutes.includes(nextUrl.pathname);
 
-  if (isAuthApiRoute) return null;
+  if (isAuthApiRoute) return undefined;
 
   if (isAuthRoute) {
     if (isLoggedIn) {
       return Response.redirect(new URL(DEFAULT_AFTERLOGIN_REDIRECT, nextUrl));
     }
-    return null;
+    return undefined;
   }
 
   // Require authentication for protected routes
   if (!isLoggedIn && !isPublicRoute) {
-    return Response.redirect(new URL(DEFAULT_LOGIN_ADRESS, nextUrl))
+    let callbackUrl = nextUrl.pathname;
+    if (nextUrl.search) {
+      callbackUrl += nextUrl.search;
+    }
+
+    const encodedCallbackUrl = encodeURIComponent(callbackUrl);
+
+    return Response.redirect(new URL(
+      `${DEFAULT_LOGIN_ADRESS}?callbackUrl=${encodedCallbackUrl}`, 
+      nextUrl
+    ));
   }
 
-  return null
+  return undefined;
   
 });
  

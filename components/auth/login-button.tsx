@@ -3,6 +3,9 @@
 import { DEFAULT_LOGIN_ADRESS } from "@/routes";
 import { useRouter } from "next/navigation";
 
+import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
+import { LoginForm } from "./login-form";
+
 interface LoginButtonProps {
   children: React.ReactNode;
   mode?: "modal" | "redirect";
@@ -24,7 +27,14 @@ export const LoginButton = ({
   if (mode === "modal") {
     return (
       <span onClick={onClick} className="cursor-pointer">
-        // TODO Implement modal
+        <Dialog>
+          <DialogTrigger asChild={asChild}>
+            {children}
+          </DialogTrigger>
+          <DialogContent className="p-0 w-auto bg-transparent border-none">
+            <LoginForm />
+          </DialogContent>
+        </Dialog>
       </span>
     );
   }

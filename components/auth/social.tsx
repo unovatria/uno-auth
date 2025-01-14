@@ -6,11 +6,17 @@ import { Button } from "@/components/ui/button";
 
 import { signIn } from "next-auth/react";
 import { DEFAULT_AFTERLOGIN_REDIRECT } from "@/routes";
+import { useSearchParams } from "next/navigation";
 
 export const Social = () => {
 
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
+
   const onClick = (provider: "google" | "github") => {
-    signIn(provider, { callbackUrl: DEFAULT_AFTERLOGIN_REDIRECT });
+    signIn(provider, { 
+      callbackUrl: callbackUrl || DEFAULT_AFTERLOGIN_REDIRECT 
+    });
   }
 
   return (

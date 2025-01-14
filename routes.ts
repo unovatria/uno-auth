@@ -1,5 +1,10 @@
 
 /**
+ * Uygulamanın url adresi.
+ */
+const domain = process.env.NEXT_PUBLIC_APP_URL;
+
+/**
  * Authentication konumlarında kullanılacak olan ön ek (prefix)
  * Bu ön ek ile başlayan konumlar auth için kullanılacak
  * @type {string}
@@ -71,10 +76,10 @@ export const AuthRoutes = [
  * Doğrulama token'i için kullanılacak konum (url)
  * @type {string}
  */
-export const VerificationToken_RefreshURL = "http://localhost:3000/auth/new-verification?token=";
+export const VerificationTokenURL = domain + "/auth/new-verification?token=";
 
 /**
  * Parola sıfırlama token'i için kullanılacak konum (url)
  * @type {string}
  */
-export const PasswordResetToken_RefreshURL = "http://localhost:3000/auth/new-password?token=";
+export const PasswordResetTokenURL = domain + "/auth/new-password?token=";

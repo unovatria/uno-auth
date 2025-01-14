@@ -23,7 +23,7 @@ export default function Home() {
           Authentication system build with Next.js and Tailwind CSS
         </p>
           <div>
-            <LoginButton>
+            <LoginButton mode="modal" asChild>
               <Button variant="secondary" size="lg">
                 Sign In
               </Button>
