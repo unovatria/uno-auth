@@ -8,16 +8,19 @@ import { signIn } from "next-auth/react";
 import { DEFAULT_AFTERLOGIN_REDIRECT } from "@/lib/routes";
 import { useSearchParams } from "next/navigation";
 
+import type { LiteralUnion, SignInOptions } from "next-auth/react";
+import type { BuiltInProviderType } from "next-auth/providers";
+
 export const Social = () => {
 
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
 
-  const onClick = (provider: "google" | "github") => {
-    signIn(provider, { 
-      callbackUrl: callbackUrl || DEFAULT_AFTERLOGIN_REDIRECT 
-    });
-  }
+  const onClick = (provider: LiteralUnion<BuiltInProviderType>) => {
+    signIn(provider, {
+      callbackUrl: callbackUrl || DEFAULT_AFTERLOGIN_REDIRECT,
+    } as SignInOptions);
+  };
 
   return (
     <div className="flex items-center w-full gap-x-2">

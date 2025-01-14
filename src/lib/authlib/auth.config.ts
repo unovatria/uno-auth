@@ -10,7 +10,7 @@ import { getUserByEmail } from "@/data/user"
 
 import bcrypt from "bcryptjs"
  
-export default { 
+const config: NextAuthConfig = {
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -42,12 +42,6 @@ export default {
       },
     })
   ],
-  /*
-  callbacks: {
-    authorized({ auth, request: { nextUrl } }) {
-      return true;
-    }
-  },
-  trustHost: true,
-  */
-} satisfies NextAuthConfig
+} as const;
+
+export default config;
