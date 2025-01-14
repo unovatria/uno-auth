@@ -2,14 +2,19 @@
 
 import { UserButton } from "@/components/auth/user-button";
 import { Button } from "@/components/ui/button";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 export const Navbar = () => {
 
   const pathname = usePathname();
 
-
+  const { update } = useSession();
+  useEffect(() => {
+    update();
+  }, []);
 
   return (
     <nav className="bg-secondary flex justify-between items-center p-4 rounded-xl w-[700px] shadow-sm">

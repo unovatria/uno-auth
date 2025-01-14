@@ -126,7 +126,7 @@ export const login = async (
       redirectTo: callbackUrl || DEFAULT_AFTERLOGIN_REDIRECT,
       callbackUrl: callbackUrl || DEFAULT_AFTERLOGIN_REDIRECT,
     });
-    //return { success: "Login success!" }
+    return { success: "Login success!" }
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
