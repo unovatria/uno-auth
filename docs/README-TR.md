@@ -1,4 +1,4 @@
-#### TR Readme (Click for EN Readme)
+#### TR Readme [(Click for EN Readme)](https://github.com/gbpii/uno-auth/blob/84ff208b36ce81c4e966683b3d285c8bc7ce7c3f/docs/README.md)
 
 # Next Auth - Fullstack AuthJS & NextJS
 
@@ -57,4 +57,15 @@ Proje içerisindeki `.env-example` dosyasının içeriğini gereken şekilde dol
 Çalıştır `npm run dev` (projeyi çalıştırmak için).
 
 ## Screenshots
+
+![1](pictures/1.png)
+![2](pictures/2.png)
+![3](pictures/3.png)
+![4](pictures/4.png)
+![5](pictures/5.png)
+![6](pictures/6.png)
+
+## Original demo link:
+
+**Code with Antonio** [Youtube Next Auth V5](https://www.youtube.com/watch?v=1MTyCvS05V4)
 
