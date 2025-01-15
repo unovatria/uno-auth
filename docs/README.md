@@ -1,4 +1,4 @@
-#### EN Readme [(TR Readme için Tıkla)](https://github.com/gbpii/uno-auth/blob/84ff208b36ce81c4e966683b3d285c8bc7ce7c3f/docs/README-TR.md)
+#### EN Readme [(TR Readme için Tıkla)](README-TR.md)
 
 # Next Auth - Fullstack AuthJS & NextJS
 
